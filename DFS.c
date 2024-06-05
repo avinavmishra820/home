@@ -1,6 +1,50 @@
 #include<stdio.h>
 #include<time.h>
 int n,a[50][50],i,j,count=0,reach[50],pos[50];
+
+void read_matrix()
+{
+	printf("\n Enter the adjacency matrix (Enter 0/1)\n");
+	for(i=1;i<=n;i++)
+	for(j=1;j<=n;j++)
+	if(i!=j)
+	{
+		printf("(%d,%d):",i,j);
+		scanf("%d",&a[i][j]);
+	}
+}
+int adjacent(int i)
+{
+	for(j=pos[i]+1;j<=n;j++)
+	if(a[i][j]==1)
+	{
+		pos[i]=j;
+		return j;
+	}
+	pos[i]=n+1;
+	return 0;
+}
+
+int checkreach(int u)
+{
+	for(i=1;i<=count;i++)
+	if(reach[i]==u)
+		return 1;
+	return 0;
+}
+
+void dfs(int v)
+{
+	int u;
+	reach[++count]=v;
+	u=adjacent(v);
+	while(u)
+	{
+		if(checkreach(u)==0) dfs(u);
+		u=adjacent(v);
+	}
+}
+
 int main()
 {
         int v;
@@ -27,46 +71,4 @@ int main()
        }
         printf("\nThe run time is %f\n",clk);
         return 0;
-}
-
-read_matrix()
-{
-	printf("\n Enter the adjacency matrix (Enter 0/1)\n");
-	for(i=1;i<=n;i++)
-	for(j=1;j<=n;j++)
-	if(i!=j)
-	{
-		printf("(%d,%d):",i,j);
-		scanf("%d",&a[i][j]);
-	}
-}
-
-dfs(int v)
-{
-	int u;
-	reach[++count]=v;
-	u=adjacent(v);
-	while(u)
-	{
-		if(checkreach(u)==0) dfs(u);
-		u=adjacent(v);
-	}
-}
-adjacent(int i)
-{
-	for(j=pos[i]+1;j<=n;j++)
-	if(a[i][j]==1)
-	{
-		pos[i]=j;
-		return j;
-	}
-	pos[i]=n+1;
-	return 0;
-}
-checkreach(int u)
-{
-	for(i=1;i<=count;i++)
-	if(reach[i]==u)
-		return 1;
-	return 0;
 }
