@@ -4,7 +4,7 @@ void subset(int cs, int k, int r)
 {
     int i;
     x[k] = 1;
-    if ((cs + w[k]) > d)
+    if ((cs + w[k]) >= d)
     {
         printf("\n Subset solution = %d\n", ++count);
         for (i = 0; i <= k; i++)
